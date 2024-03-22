@@ -17,21 +17,37 @@ terminate() {
   exit
 }
 
-# Run the local model.
-./mixtral-8x7b-instruct-v0.1.Q3_K_M.llamafile &
-
 # https://docs.openinterpreter.com/guides/running-locally
 # --api_key
 # ollama run dolphin-mixtral:8x7b-v2.6
 
 # https://docs.openinterpreter.com/guides/os-mode
 # --os
-#  --model claude-2 --api_key 123
 #  --model ollama/dolphin-mixtral:8x7b-v2.63 \
-interpreter \
-  --model mixtral-8x7b-instruct \
-  --context_window 32768 \
-  --api_base http://localhost:8080/v1 \
-  --custom_instructions "Vous parlez français" &
 
-wait
+mixtral() {
+  # Run the local model.
+  ./mixtral-8x7b-instruct-v0.1.Q3_K_M.llamafile &
+  interpreter \
+    --model mixtral-8x7b-instruct \
+    --context_window 32768 \
+    --api_base http://localhost:8080/v1 \
+    --custom_instructions "Vous parlez français" &
+
+  wait
+}
+
+claude() {
+  # See https://github.com/OpenInterpreter/open-interpreter/issues/1056
+  #  --model openrouter/anthropic/claude-3-opus
+  # https://docs.litellm.ai/docs/providers/anthropic
+  #  --verbose
+  interpreter \
+    --model claude-3-sonnet-20240229 \
+    --api_key $(cat claude.key) \
+    --context_window 200000 \
+    --max_tokens 4000 \
+    --custom_instructions "Vous parlez français"
+}
+
+claude
