@@ -13,5 +13,6 @@ source venv/bin/activate
 
 UNAME=$(uname)
 
-pip3 install -U litellm[proxy] open-interpreter
+pip3 install -U litellm[proxy]
+pip3 install -U open-interpreter
 pip3 freeze > "requirements-$(uname).txt"
