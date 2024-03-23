@@ -32,6 +32,7 @@ mixtral() {
       --model mixtral-8x7b-instruct \
       --context_window 32768 \
       --api_base http://localhost:8080/v1 \
+      --api_key ignored \
       --custom_instructions "Vous parlez français" \
       "$@" &
   wait
@@ -89,4 +90,5 @@ gemini() {
 
 #claude
 #gemini
-gpt
+#gpt
+mixtral

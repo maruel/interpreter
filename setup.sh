@@ -20,12 +20,12 @@ fi
 MODEL=mixtral-8x7b-instruct-v0.1.Q3_K_M.llamafile
 
 if [ ! -f $MODEL ]; then
-  if [ $# != 1 ]; then
-    echo "Get token at https://huggingface.co/settings/tokens"
+  if [ ! -f huggingface.key ]; then
+    echo "Get token at https://huggingface.co/settings/tokens and put it in huggingface.key"
     exit 1
   fi
   curl -L -O \
-    -H "Authorization: Bearer $1" \
+    -H "Authorization: Bearer $(cat huggingface.key)" \
     https://huggingface.co/jartine/Mixtral-8x7B-Instruct-v0.1-llamafile/resolve/main/$MODEL
   chmod +x $MODEL
 fi
